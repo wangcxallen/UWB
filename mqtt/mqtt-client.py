@@ -16,18 +16,21 @@ FLAG = 0
 def UWB_on_Message(client, userdata, msg):
     print( "%s %s" % (msg.topic, str(msg.payload)) )
     if(len(msg.payload)):
-        speaker = int(msg.payload)
-        if(speaker== FLAG):
-            time.sleep(0.2)
-            print("say")
-            cmd = shlex.split("/home/pi/UWB/dw1000/src/dw1000_tx")
-            p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            print(p.communicate()[0].decode("utf-8"))
-        else:
-            print("hear")
-            cmd = shlex.split("/home/pi/UWB/dw1000/src/dw1000_rx_cir")
-            p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            print(p.communicate()[0].decode("utf-8"))
+        speaker = int(msg.payload[0])
+        sequence_num = int(msg.payload[1:])
+        print(speaker)
+        print(sequence_num)
+#        if(speaker== FLAG):
+#            time.sleep(0.2)
+#            print("say")
+#            cmd = shlex.split("/home/pi/UWB/dw1000/src/dw1000_tx")
+#            p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+#            print(p.communicate()[0].decode("utf-8"))
+#        else:
+#            print("hear")
+#            cmd = shlex.split("/home/pi/UWB/dw1000/src/dw1000_rx_cir")
+#            p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+#            print(p.communicate()[0].decode("utf-8"))
     
 def on_connect(client, userdata, flags, rc):
     print("Connection returned result: " + connack_string(rc))
