@@ -131,7 +131,7 @@ void saveInfoToFile(char *filename, uint64 time, struct cir_tap_struct *cir, dwt
     FILE *output_file;
     int i;
     
-    output_file = fopen("../data/" + filename, "w");
+    output_file = fopen(filename, "w");
     if (output_file == NULL){
         printf("unable to write\n");
     }
@@ -278,7 +278,7 @@ int main(void)
             }
             
             char filename[32];
-            snprintf(filename, 31, "time_%llu.csv", time);
+            snprintf(filename, 31, "../data/%llu.csv", time);
             saveInfoToFile(filename, time, cir, &diagnostics);
             
             printf("\n");
