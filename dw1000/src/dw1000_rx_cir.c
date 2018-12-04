@@ -278,7 +278,7 @@ int main(void)
             }
             
             char filename[32];
-            snprintf(filename, 31, "/home/UWB/data/%llu.csv", time);
+            snprintf(filename, 31, "/home/pi/UWB/data/%llu.csv", time);
             saveInfoToFile(filename, time, cir, &diagnostics);
             
             printf("\n");
