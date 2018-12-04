@@ -14,7 +14,7 @@ PORT = 1883
 epoch = 0
 squence_num = 0
 while(epoch<5):
-    for i in np.arange(2):
+    for i in np.arange(3):
         print("RPI %i speaks..." % i)
         print("MSG %i" % squence_num)
         print("-"*30)
