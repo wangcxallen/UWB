@@ -289,7 +289,7 @@ int main(int argc, char** argv)
         snprintf(filename, 47, "/home/pi/UWB/data/%llu.csv", time);
         saveInfoToFile(filename, time, cir, &diagnostics);
         
-        printf("-" * 20);
+        for(int i=0;i<20;i++){printf("*");}
         printf("\n");
     }
     else
