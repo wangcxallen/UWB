@@ -286,7 +286,7 @@ int main(int argc, char** argv)
 //        }
         
         char filename[48];
-        snprintf(filename, 47, "/home/pi/UWB/data/msg%i_%llu.csv", squence_num, time);
+        snprintf(filename, 47, "/home/pi/UWB/data/msg%llu_%i.csv", time, squence_num);
         saveInfoToFile(filename, time, cir, &diagnostics);
     }
     else
