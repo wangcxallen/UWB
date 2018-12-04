@@ -47,40 +47,35 @@ static dwt_config_t config = {
 };
 
 
-/* Index to access to sequence number of the blink frame in the tx_msg array. */
-#define BLINK_FRAME_SN_IDX 1   //not used
+/* Index to access to a certain frame in the tx_msg array. */
 #define TS_IDX   2   // time_stamp index
-
-/* Inter-frame delay period, in milliseconds. */
-#define TX_DELAY_MS 2000
 
 typedef unsigned long long uint64;
 typedef signed long long int64;
-
-/***** Function declarations *****/
-
-static uint64 get_tx_timestamp_u64(void);
-static uint64 get_system_timestamp_u64(void);
 
 
 /**
  * Application entry point.
  */
-int main(void)//int argc, char** argv
+int main(void)
 {
-    uint8 squence_num=0;
-    uint32 exchangeNo = 0;
-    uint32 frame_len = 0;
-    uint32 status_reg = 0;
-    int ret = 0;
-    uint64 time_now = 0;
+    /********************************************************/
+    /***************** Variable Declaration *****************/
+    /********************************************************/
     
-    /* The frame sent in this example is adjusted from an 802.15.4e standard blink. It is a 12-byte frame composed of the following fields:
+    uint64 time_now = 0;   // To store current time
+    /*The frame sent in this example is adjusted from an 802.15.4e standard blink. It is a 12-byte frame composed of the following fields:
      *     - byte 0: frame type (0xC5 for a blink).
-     *     - byte 1: sequence number, incremented for each new frame.
-     *     - byte 2 -> 9: tx_timestamp
-     *     - byte 10/11: frame check-sum, automatically set by DW1000.  */
-    uint8 tx_msg[] = {0xab, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // size = 1+1+8+2 = 12
+     *     - byte 1: not used here
+     *     - byte 2 -> 9: current time
+     *     - byte 10/11: frame check-sum, automatically set by DW1000.
+     size = 1+1+8+2 = 12
+     */
+    uint8 tx_msg[] = {0xab, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    
+    /********************************************************/
+    /******************** Initialization ********************/
+    /********************************************************/
     
     /* Start with board specific hardware init. */
 	hardware_init();
@@ -103,39 +98,31 @@ int main(void)//int argc, char** argv
 
     printf("%s\n", APP_NAME);
     
-    int sampletime = 0;
-    /* Loop forever sending frames periodically. */
-    while(sampletime<1)
-    {
-        sampletime++;
-        /* Get tx_timestamp */
-        time_now = time(NULL);
-        
-        memcpy((void *) &tx_msg[TS_IDX], (void *) &time_now, sizeof(uint64)); // copy tx timestamp
-        memcpy((void *) &tx_msg[BLINK_FRAME_SN_IDX], (void *) &squence_num, sizeof(uint8));
-        
-        /* Write frame data to DW1000 and prepare transmission. See NOTE 4 below.*/
-        dwt_writetxdata(sizeof(tx_msg), tx_msg, 0); /* Zero offset in TX buffer. */
-        dwt_writetxfctrl(sizeof(tx_msg), 0, 0); /* Zero offset in TX buffer, no ranging. */
+    /********************************************************/
+    /******************* Start sending MSG ******************/
+    /********************************************************/
+    /* Get current time and copy it to tx_msg*/
+    time_now = time(NULL);
+    memcpy((void *) &tx_msg[TS_IDX], (void *) &time_now, sizeof(uint64));
+    
+    /* Write frame data to DW1000 and prepare transmission. See NOTE 4 below.*/
+    dwt_writetxdata(sizeof(tx_msg), tx_msg, 0); /* Zero offset in TX buffer. */
+    dwt_writetxfctrl(sizeof(tx_msg), 0, 0); /* Zero offset in TX buffer, no ranging. */
 
-        /* Start transmission. */
-        dwt_starttx(DWT_START_TX_IMMEDIATE);
+    /* Start transmission. */
+    dwt_starttx(DWT_START_TX_IMMEDIATE);
 
-        /* Poll DW1000 until TX frame sent event set. See NOTE 5 below.
-         * STATUS register is 5 bytes long but, as the event we are looking at is in the first byte of the register, we can use this simplest API
-         * function to access it.*/
-        while (!(dwt_read32bitreg(SYS_STATUS_ID) & SYS_STATUS_TXFRS))
-        { };
+    /* Poll DW1000 until TX frame sent event set. See NOTE 5 below.
+     * STATUS register is 5 bytes long but, as the event we are looking at is in the first byte of the register, we can use this simplest API
+     * function to access it.*/
+    while (!(dwt_read32bitreg(SYS_STATUS_ID) & SYS_STATUS_TXFRS))
+    { };
 
-        /* Clear TX frame sent event. */
-        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_TXFRS);
-
-        /* Execute a delay between transmissions. */
-//        sleep_ms(TX_DELAY_MS);
-
-        /* How to print uint8??????? */
-        printf("%u MSG SENT! Time: %llu\n", squence_num, time_now);
-    }
+    /* Clear TX frame sent event. */
+    dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_TXFRS);
+    printf("%u MSG SENT! Time: %llu\n", squence_num, time_now);
+    printf("-" * 20);
+    printf("\n");
 }
 
 /*****************************************************************************************************************************************************
