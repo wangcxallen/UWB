@@ -121,8 +121,6 @@ int main(void)
     /* Clear TX frame sent event. */
     dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_TXFRS);
     printf("MSG SENT! Time: %llu\n", time_now);
-    for(int i=0;i<20;i++){printf("*");}
-    printf("\n");
 }
 
 /*****************************************************************************************************************************************************

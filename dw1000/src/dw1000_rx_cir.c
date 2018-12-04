@@ -241,7 +241,7 @@ int main(int argc, char** argv)
      The time parameter used here is in 1.0256 us (512/499.2MHz) units.
      If set to 0 the timeout is disabled.*/
     /* Activate reception immediately. See NOTE 3 below. */
-    dwt_setrxtimeout(0);
+    dwt_setrxtimeout(3e6);
     dwt_rxenable(DWT_START_RX_IMMEDIATE);
 
     /* Poll until a frame is properly received or an error/timeout occurs. See NOTE 4 below.
@@ -286,11 +286,8 @@ int main(int argc, char** argv)
 //        }
         
         char filename[48];
-        snprintf(filename, 47, "/home/pi/UWB/data/%llu.csv", time);
+        snprintf(filename, 47, "/home/pi/UWB/data/msg%i_%llu.csv", squence_num, time);
         saveInfoToFile(filename, time, cir, &diagnostics);
-        
-        for(int i=0;i<20;i++){printf("*");}
-        printf("\n");
     }
     else
     {
