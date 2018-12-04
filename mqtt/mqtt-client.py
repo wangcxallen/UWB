@@ -20,12 +20,12 @@ def UWB_on_Message(client, userdata, msg):
         if(speaker== FLAG):
             time.sleep(0.2)
             print("say")
-            cmd = shlex.split("../dw1000/src/dw1000_tx")
+            cmd = shlex.split("/home/UWB/dw1000/src/dw1000_tx")
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
             print(p.communicate()[0].decode("utf-8"))
         else:
             print("hear")
-            cmd = shlex.split("../dw1000/src/dw1000_rx_cir")
+            cmd = shlex.split("/home/UWB/dw1000/src/dw1000_rx_cir")
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
             print(p.communicate()[0].decode("utf-8"))
     
