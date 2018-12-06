@@ -1,6 +1,6 @@
 # UWB
 ## Overall description
-UWB testing plan contains 5 Rpi-zero and a center motherboard. The motherboard runs the MQTT broker server and the mqtt-host program. Python program mqtt-host and mqtt-client in file "UWB/mqtt" are the top control program. The mqtt-client program calls the c program in dw1000 to tx or rx according to the publication on mqtt-host.
+UWB testing plan contains 5 Rpi-zero and a center motherboard. The motherboard runs the MQTT broker server and the mqtt-host program. Python program mqtt-host and mqtt-client in file "UWB/mqtt" are the top control program. The mqtt-client program calls the c program in dw1000 to tx or rx program in file "UWB/dw1000" according to the publication on mqtt-host.
 
 ## Depandency installation
 ### MQTT server: mosquitto
