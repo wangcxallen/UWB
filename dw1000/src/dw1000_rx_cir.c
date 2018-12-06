@@ -177,7 +177,7 @@ int main(int argc, char** argv)
         squence_num = atoi(argv[1]);
     }
     
-    uint64 time = 0;   // To store received current time
+    uint64 current_time = 0;   // To store received current time
     
     uint8 *cir_buffer;   // To store CIR info
     cir_buffer = (uint8 *) malloc(4*CIR_SAMPLES);
@@ -273,8 +273,8 @@ int main(int argc, char** argv)
                 dwt_readrxdata(rx_buffer, frame_len, 0);
             }
             /*  Get current time to the local buffer. */
-            memcpy((void *) &time, (void *) &rx_buffer[TS_IDX], sizeof(uint64));
-            printf("%u MSG Received! Time: %llu\r\n", squence_num, time);
+            memcpy((void *) &current_time, (void *) &rx_buffer[TS_IDX], sizeof(uint64));
+            printf("%u MSG Received! Time: %llu\r\n", squence_num, current_time);
             
             /*  Get diagnostic to our local buffer. */
             dwt_readdiagnostics(&diagnostics);
@@ -297,8 +297,8 @@ int main(int argc, char** argv)
     //        }
             
             char filename[48];
-            snprintf(filename, 47, "/home/pi/UWB/data/msg%llu_%i.csv", time, squence_num);
-            saveInfoToFile(filename, time, cir, &diagnostics);
+            snprintf(filename, 47, "/home/pi/UWB/data/msg%llu_%i.csv", current_time, squence_num);
+            saveInfoToFile(filename, current_time, cir, &diagnostics);
             printf("End sample\n");
             break;
         }
