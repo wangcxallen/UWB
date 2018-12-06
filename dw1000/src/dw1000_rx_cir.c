@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h> // memset
+#include <time.h>  //timeout
 
 #include "deca_device_api.h"
 #include "deca_regs.h"
@@ -219,7 +220,7 @@ int main(int argc, char** argv)
     
     printf("start sample\n");
     
-    start_time = time(NULL);
+    auto start_time = time(NULL);
     while(time(NULL)-start_time<TIMEOUT)
     {
         /* Clear local RX buffer to avoid having leftovers from previous receptions  This is not necessary but is included here to aid reading
