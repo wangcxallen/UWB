@@ -299,6 +299,7 @@ int main(int argc, char** argv)
             snprintf(filename, 47, "/home/pi/UWB/data/msg%llu_%i.csv", time, squence_num);
             saveInfoToFile(filename, time, cir, &diagnostics);
             printf("End sample\n");
+            break;
         }
         else
         {
