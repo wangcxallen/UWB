@@ -8,8 +8,8 @@ import paho.mqtt.client as client
 import time, subprocess, shlex
 import numpy as np
 
-HOST = "192.168.1.192"
-PORT = 1883
+HOST = "192.168.1.199"
+PORT = 1884
 TOPIC = "UWB"
 FLAG = 0
 
