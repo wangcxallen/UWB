@@ -299,7 +299,7 @@ int main(int argc, char** argv)
             char filename[48];
             snprintf(filename, 47, "/home/pi/UWB/data/msg%llu_%i.csv", current_time, squence_num);
             saveInfoToFile(filename, current_time, cir, &diagnostics);
-            printf("End sample\n");
+            printf("\nEnd sample\n");
             break;
         }
         else
@@ -309,7 +309,6 @@ int main(int argc, char** argv)
 
             /* Reset RX to properly reinitialise LDE operation. */
             dwt_rxreset();
-            printf("Error\n");
         }
     }
     
