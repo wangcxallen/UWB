@@ -80,7 +80,7 @@ struct cir_tap_struct {
 };
 
 #define ACC_CHUNK 64 // bytes read at the same time
-#define TIMEOUT 0   // timeout of the loop
+#define TIMEOUT 5   // timeout of the loop
 
 void copyCIRToBuffer(uint8 *buffer, uint16 len)
 {
