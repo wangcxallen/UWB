@@ -79,7 +79,7 @@ struct cir_tap_struct {
 };
 
 #define ACC_CHUNK 64 // bytes read at the same time
-#define timeout 0   // timeout of rx
+#define TIMEOUT 0   // timeout of rx
 
 void copyCIRToBuffer(uint8 *buffer, uint16 len)
 {
@@ -242,7 +242,7 @@ int main(int argc, char** argv)
      The time parameter used here is in 1.0256 us (512/499.2MHz) units.
      If set to 0 the timeout is disabled.*/
     /* Activate reception immediately. See NOTE 3 below. */
-    dwt_setrxtimeout(timeout);
+    dwt_setrxtimeout(TIMEOUT);
     dwt_rxenable(DWT_START_RX_IMMEDIATE);
 
     /* Poll until a frame is properly received or an error/timeout occurs. See NOTE 4 below.
