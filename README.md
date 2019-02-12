@@ -73,3 +73,16 @@ then reboot the system:
 sudo reboot
 ```
 
+## Data collection
+### Running command
+Running mqtt-host on the center pc which broadcast numbers to control the collection process
+```
+python /home/pi/UWB/mqtt/mqtt-host.py
+```
+Running mqqtt-client on every Rpi0 to collect data
+```
+python /home/pi/UWB/mqtt/mqtt-client.py
+```
+### Data organization
+### Code structure
+
