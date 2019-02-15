@@ -8,7 +8,7 @@ import paho.mqtt.publish as publish
 import time
 import numpy as np
 
-HOST = "192.168.1.199"
+HOST = "192.168.1.235"
 PORT = 1884
 
 epoch = 0
