@@ -8,8 +8,8 @@ import paho.mqtt.publish as publish
 import time
 import numpy as np
 
-HOST = "192.168.1.235"
-PORT = 1884
+HOST = "192.168.1.235" #235 in arena/199 in home
+PORT = 1884 #1884 in arena/1883 in home
 
 epoch = 0
 squence_num = 0
