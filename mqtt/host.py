@@ -20,6 +20,6 @@ while(epoch<1000):
         print("-"*30)
         publish.single("UWB", "%i%i"% (i, squence_num), hostname=HOST, port=PORT)
         squence_num += 1
-        time.sleep(10)
+        time.sleep(0.1)
     epoch +=1
 
