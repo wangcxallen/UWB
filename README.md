@@ -26,11 +26,12 @@ Then make the repository available to apt:
 cd /etc/apt/sources.list.d/
 ```
 
-Then one of the following, depending on which version of debian you are using:
+Then one of the following, depending on which version of debian system you are using:
 
 ```
 sudo wget http://repo.mosquitto.org/debian/mosquitto-wheezy.list
 sudo wget http://repo.mosquitto.org/debian/mosquitto-jessie.list
+sudo wget http://repo.mosquitto.org/debian/mosquitto-stretch.list
 ```
 
 Then update apt information:
