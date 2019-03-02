@@ -36,13 +36,13 @@ sudo wget http://repo.mosquitto.org/debian/mosquitto-jessie.list
 Then update apt information:
 
 ```
-apt-get update
+sudo apt-get update
 ```
 
 Then run install command:
 
 ```
-apt-get install mosquitto
+sudo apt-get install mosquitto
 ```
 
 ### Paho MQTT python
