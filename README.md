@@ -76,13 +76,17 @@ sudo reboot
 
 ## Data collection
 ### Running command
-Running mqtt-host on the center pc which broadcast numbers to control the collection process
+Running the mosquitto on the hostap first to establish a mqtt broker. 1884 is the right pipe for host-ap. The default pipe number is 1883.
 ```
-python /home/pi/UWB/mqtt/mqtt-host.py
+mosquitto -p 1884
 ```
 Running mqqtt-client on every Rpi0 to collect data
 ```
 python /home/pi/UWB/mqtt/mqtt-client.py
+```
+Running mqtt-host on the center pc which broadcast numbers to control the collection process
+```
+python /home/pi/UWB/mqtt/mqtt-host.py
 ```
 ### Data organization
 ### Code structure
