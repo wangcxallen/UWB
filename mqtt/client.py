@@ -32,6 +32,7 @@ def UWB_on_Message(client, userdata, msg):
             print(p.communicate()[0].decode("utf-8"))
             print("-"*30)
         else:
+            print("end")
             sys.exit(0)
 
 def on_connect(client, userdata, flags, rc):
