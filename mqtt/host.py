@@ -13,7 +13,7 @@ PORT = 1883 #1884 in arena/1883 in home
 
 epoch = 0
 squence_num = 0
-while(epoch<20):
+while(epoch<200):
     for i in np.arange(4):
         print("RPI %i speaks..." % i)
         print("MSG %i" % squence_num)
