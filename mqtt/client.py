@@ -8,10 +8,10 @@ import paho.mqtt.client as client
 import time, subprocess, shlex, sys
 import numpy as np
 
-HOST = "192.168.1.231" #235 in arena/199 in home
-PORT = 1883 #1884 in arena/1883 in home
+HOST = sys.argv[1] #235 in arena/199 in home
+PORT = int(sys.argv[2]) #1884 in arena/1883 in home
 TOPIC = "UWB"
-FLAG = sys.argv[1]
+FLAG = int(sys.argv[3])
 
 def UWB_on_Message(client, userdata, msg):
     if(len(msg.payload)):

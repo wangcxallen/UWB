@@ -28,6 +28,9 @@ def main():
               '10.10.10.1',
               '10.10.10.1']
     
+    HOST="10.10.10.207" #235 in arena/199 in home
+    PORT="1883" #1884 in arena/1883 in home
+    
     server = arena
     username = 'pi'  
     password = 'raspberry'
@@ -40,7 +43,7 @@ def main():
         rpi[idx].set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
             rpi[idx].connect(hostname=hostname, username=username, password=password, timeout=2)
-            stdin, stdout, stderr = rpi[idx].exec_command("python /home/pi/UWB/mqtt/client.py %i" % idx) # Set flag of each Rpi
+            stdin, stdout, stderr = rpi[idx].exec_command("python /home/pi/UWB/mqtt/client.py "+HOST+" "+PORT+" %i" % idx) # Set flag of each Rpi
             # This function just pass through the command. It doesn't wait for it to end.
 #            misbehave.append(idx) # This part is not finished yet
         except:
@@ -57,7 +60,7 @@ def main():
             rpi[idx].close()
         return
     else:
-        cmd = shlex.split("python -u ../../../test.py")
+        cmd = shlex.split("python -u host.py "+HOST+" "+PORT)
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 #        print(p.communicate()[0].decode("utf-8")) # If communicate is called, it will wait until the process is terminated
         for line in p.stdout:
