@@ -8,12 +8,12 @@ import paho.mqtt.publish as publish
 import time
 import numpy as np
 
-HOST = "192.168.1.235" #235 in arena/199 in home
-PORT = 1884 #1884 in arena/1883 in home
+HOST = "192.168.1.231" #235 in arena/199 in home
+PORT = 1883 #1884 in arena/1883 in home
 
 epoch = 0
 squence_num = 0
-while(epoch<1000):
+while(epoch<10):
     for i in np.arange(4):
         print("RPI %i speaks..." % i)
         print("MSG %i" % squence_num)
