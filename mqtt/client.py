@@ -11,7 +11,7 @@ import numpy as np
 HOST = "192.168.1.231" #235 in arena/199 in home
 PORT = 1883 #1884 in arena/1883 in home
 TOPIC = "UWB"
-FLAG = 0
+FLAG = sys.argv[1]
 
 def UWB_on_Message(client, userdata, msg):
     if(len(msg.payload)):
@@ -32,7 +32,7 @@ def UWB_on_Message(client, userdata, msg):
             print(p.communicate()[0].decode("utf-8"))
             print("-"*30)
         else:
-            print("end")
+            print("End client")
             sys.exit(0)
 
 def on_connect(client, userdata, flags, rc):
@@ -46,11 +46,11 @@ UWB_client.on_message = UWB_on_Message
 UWB_client.on_connect = on_connect
 UWB_client.on_disconnect = on_disconnect
         
-def UWB_client_main():
+def main():
     UWB_client.connect(HOST, PORT, 60)
     UWB_client.subscribe(topic = TOPIC)
     UWB_client.loop_forever()
 
 if __name__=='__main__':
-    UWB_client_main()
+    main()
 

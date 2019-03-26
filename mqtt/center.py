@@ -6,35 +6,65 @@ Created on Mon Mar 25 17:49:15 2019
 @author: wangchenxi
 """
 
-import paramiko, sys  
+import paramiko, shlex, subprocess, os
 
 def main():  
       
-    server = ['192.168.1.209',
+    arena = ['192.168.1.209',
+              '192.168.1.209',
+              '192.168.1.209',
+              '192.168.1.209',
+              '192.168.1.209']
+    
+    coffee = ['192.168.1.209',
               '192.168.1.200',
               '192.168.1.200',
               '192.168.1.200',
               '192.168.1.200']
+    
+    headcount = ['10.10.10.176',
+              '10.10.10.1',
+              '10.10.10.1',
+              '10.10.10.1',
+              '10.10.10.1']
+    
+    server = arena
     username = 'pi'  
     password = 'raspberry'
+    rpi = [0,1,2,3,4]
+#    misbehave = [] # This part is not finished yet
     misconnection = []
-    
-    for hostname in server:
-        print(hostname)
-        rpi = paramiko.SSHClient()  
-        rpi.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    for idx, hostname in enumerate(server):
+        rpi[idx] = paramiko.SSHClient()  
+        rpi[idx].set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
-            rpi.connect(hostname=hostname, username=username, password=password, timeout=5)
-            ssh_stdin, ssh_stdout, ssh_stderr = rpi.exec_command("python /home/pi/UWB/mqtt/host.py")
-            # This function just pass throught the command. It doesn't wait for it to end.
+            rpi[idx].connect(hostname=hostname, username=username, password=password, timeout=2)
+            stdin, stdout, stderr = rpi[idx].exec_command("python /home/pi/UWB/mqtt/client.py %i" % idx) # Set flag of each Rpi
+            # This function just pass through the command. It doesn't wait for it to end.
+#            misbehave.append(idx) # This part is not finished yet
         except:
-            misconnection.append(hostname)
-            sys.exit(0)
+            misconnection.append(idx) # Establish a list of failure connected IP addresses
     
-    if misconnection!=[]:
-        print("Misconnection occurs:")
-        for hostname in misconnection:
-            print(hostname)
-    
+    if misconnection!=[]: # If any one of the client is not working, reject the program and print the error info
+        print("Misconnection:")
+        for idx in misconnection:
+            print("%i:" % idx + server[idx])
+#        print("Misbehave:") # This part is not finished yet
+#        for idx in misbehave:
+#            print("%i:" % idx + server[idx])
+        for idx, hostname in enumerate(server):
+            rpi[idx].close()
+        return
+    else:
+        cmd = shlex.split("python -u ../../../test.py")
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+#        print(p.communicate()[0].decode("utf-8")) # If communicate is called, it will wait until the process is terminated
+        for line in p.stdout:
+            print(line.decode("utf-8"))
+        for idx, hostname in enumerate(server):
+            rpi[idx].close()
+        return
+        
 if __name__ == "__main__":  
     main()  
